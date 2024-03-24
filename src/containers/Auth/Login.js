@@ -13,9 +13,38 @@ import { Label } from 'reactstrap';
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.btnLogin = React.createRef();
+        this.state = {
+            username: '',
+            passwork: '',
+            isShowPassword: false,
+        }
     }
 
+    handleOnChangeUsername = (event) => {
+        this.setState({
+            username: event.target.value
+        })
+        console.log(event.target.value)
+    }
+
+    handleOnChangePassword = (event) => {
+        this.setState({
+            passwork: event.target.value
+        })
+        console.log(event.target.value)
+    }
+
+
+    handleLogin = () => {
+        console.log('username: ', this.state.username, ' passwork: ', this.state.passwork);
+        console.log('all state: ', this.state);
+    }
+
+    handleShowHidePasswork = () => {
+        this.setState({
+            isShowPassword: !this.state.isShowPassword
+        })
+    }
 
     //  JSX
 
@@ -29,14 +58,30 @@ class Login extends Component {
                         <div className='col-12 text-login'>Login </div>
                         <div className='col-12 form-group login-input' >
                             <Label>Usesrname:</Label>
-                            <input type='text' className='form-control' placeholder='Enter your username'></input>
+                            <input type='text' className='form-control'
+                                placeholder='Enter your username'
+                                value={this.state.username}
+                                onChange={(event) => this.handleOnChangeUsername(event)}></input>
                         </div>
                         <div className='col-12 form-group login-input'>
                             <Label>Passwork:</Label>
-                            <input type='text' className='form-control' placeholder='Enter your passwork'></input>
+                            <div className='custom-input-password'>
+                                <input className='form-control'
+                                    type={this.state.isShowPassword ? 'text' : 'password'}
+                                    placeholder='Enter your password'
+                                    onChange={(event) => { this.handleOnChangePassword(event) }}
+                                ></input>
+                                <span
+                                    onClick={() => { this.handleShowHidePasswork() }}
+                                ><i class={this.state.isShowPassword ? 'far fa-eye' : 'fas fa-eye-slash'} ></i>
+                                </span>
+                            </div>
+
                         </div>
                         <div className='col-12 '>
-                            <button className='btn-login'>Login</button>
+                            <button className='btn-login'
+                                onClick={() => { this.handleLogin() }}
+                            >Login</button>
                         </div>
 
                         <div className='col-12'>
@@ -71,3 +116,19 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
